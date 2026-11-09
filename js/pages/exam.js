@@ -90,6 +90,8 @@ Pages.exam = function () {
       if (done) return;
       done = true;
       if (timer) clearInterval(timer);
+      timerEl.textContent = 'Submitted';
+      timerEl.classList.remove('low');
       let score = 0;
       const perQ = qs.map(() => 0);
       inputs.forEach((it) => {
