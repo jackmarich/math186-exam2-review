@@ -52,7 +52,7 @@
   // part: {type:'num'|'mc'|'set'|'text'|'explain', answer, tol, rel, choices, accept}
   UI.check = function (part, raw) {
     const type = part.type || 'num';
-    if (type === 'mc') return Number(raw) === part.answer;
+    if (type === 'mc') return raw === '' ? { blank: true } : Number(raw) === part.answer;
     if (type === 'explain') return null; // self-graded
     if (type === 'text') {
       const norm = (s) => String(s).toLowerCase().replace(/\s+/g, '').replace(/[()]/g, '');
@@ -60,7 +60,8 @@
       return accepted.includes(norm(raw));
     }
     if (type === 'set') {
-      const clean = String(raw).replace(/[{}∅]/g, ' ').trim();
+      if (!String(raw).trim()) return { blank: true };
+      const clean = String(raw).replace(/[{}∅]/g, ' ').replace(/\b(empty|none)\b/gi, ' ').trim();
       const got = clean ? clean.split(/[\s,;]+/).filter(Boolean).map((s) => s.toLowerCase()) : [];
       const want = part.answer.map((s) => String(s).toLowerCase());
       const g = new Set(got), w = new Set(want);
@@ -69,6 +70,7 @@
       return true;
     }
     // numeric
+    if (!String(raw).trim()) return { blank: true };
     let v;
     try { v = evalAnswer(raw); } catch (e) { return { error: e.message }; }
     if (!isFinite(v)) return { error: 'Enter a number (fractions like 3/8 and expressions like choose(5,2)/32 work too).' };
@@ -100,7 +102,7 @@
     }
     const inp = h('input', {
       type: 'text', class: 'ans', autocomplete: 'off', spellcheck: 'false',
-      placeholder: type === 'set' ? 'e.g. 1, 3, 5   (leave blank or {} for empty set)' : type === 'text' ? 'type your answer' : 'number, fraction, or expression',
+      placeholder: type === 'set' ? 'comma-separated list · type {} for the empty set' : type === 'text' ? 'type your answer' : 'number, fraction, or expression',
     });
     return { el: inp, get: () => inp.value, lock: () => (inp.readOnly = true) };
   };
@@ -151,6 +153,7 @@
         for (const it of inputs) {
           const res = UI.check(it.part, it.inp.get());
           it.row.classList.remove('right', 'wrong');
+          if (res && res.blank) { it.fb.textContent = 'Enter an answer for this part.'; allRight = false; continue; }
           if (res && res.error) { it.fb.textContent = res.error; allRight = false; continue; }
           if (res === null) { it.fb.innerHTML = '<em>Compare with the model answer in the solution.</em>'; continue; }
           if (res) { it.row.classList.add('right'); it.fb.textContent = '✓ Correct'; }

@@ -112,7 +112,7 @@ setdiff(S, A)      # A^c     (S goes first!)</pre>`,
         const AnBc = U.filter((x) => pa.f(x) && !pb.f(x));
         return {
           title: 'Pick a number',
-          text: `<p>A number is chosen from \\(S = \\{1, 2, \\dots, ${N}\\}\\). Let \\(A\\) = {${pa.d}} and \\(B\\) = {${pb.d}}. Enter sets as comma-separated numbers (leave blank for the empty set).</p>`,
+          text: `<p>A number is chosen from \\(S = \\{1, 2, \\dots, ${N}\\}\\). Let \\(A\\) = {${pa.d}} and \\(B\\) = {${pb.d}}. Enter sets as comma-separated numbers (type {} for the empty set).</p>`,
           parts: [
             { label: '(a) \\(A \\cup B\\)', type: 'set', answer: AuB.map(String) },
             { label: '(b) \\(A \\cap B\\)', type: 'set', answer: AnB.map(String) },
