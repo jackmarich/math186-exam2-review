@@ -556,6 +556,8 @@ window.Pages = window.Pages || {};
         out.append(span);
       }
       if (!res.output.length) out.textContent = '(no output: put your answer on the last line, without assigning it, to see it printed)';
+      const errLine = res.output.find((l) => l.type === 'stderr' && /^Error/.test(l.data));
+      if (errLine) return { error: errLine.data };
       return { value: await toPlain(res.result) };
     } catch (err) {
       out.innerHTML = '';
@@ -617,6 +619,7 @@ window.Pages = window.Pages || {};
       async function go(check) {
         if (busy) return;
         if (!stripComments(ta.value).trim()) { fb.textContent = 'Write some R code first.'; return; }
+        if (/___/.test(stripComments(ta.value))) { fb.textContent = 'Replace each ___ with a value first.'; return; }
         busy = true; runBtn.disabled = checkBtn.disabled = true;
         fb.textContent = ''; card.classList.remove('right', 'wrong');
         try {
@@ -628,7 +631,7 @@ window.Pages = window.Pages || {};
           attempts++;
           let want = null;
           if (r.error) {
-            fb.textContent = '✗ Your code gave an error (see above). Fix it and try again. ' + (/___/.test(ta.value) ? 'Replace each ___ with a value.' : '');
+            fb.textContent = '✗ Your code gave an error (see above). Fix it and try again. ';
             card.classList.add('wrong');
           } else {
             want = await runRef(webR, prob.ref);
