@@ -32,6 +32,7 @@ Pages.home = function () {
   const tools = [
     ['📝', 'Practice Exam', 'A timed mock Exam 2 in the same format as Test 1, graded with full solutions.', '#/exam'],
     ['🎯', 'Which Distribution?', 'Fast word-problem drill: pick the distribution, its parameters, and the R call.', '#/drill'],
+    ['⌨️', 'R Practice', 'Write the R code yourself: it runs as real R and gets checked. 10 skills, 3 problems each.', '#/rpractice'],
     ['💻', 'R Console', 'Real R in your browser. Practice dbinom, pnorm, and the rest just like in Posit Cloud.', '#/r'],
     ['🃏', 'Flashcards', 'Definitions, formulas, and "when do I use this?" cards.', '#/flashcards'],
     ['📄', 'Formula Sheet', 'The exam reference sheet plus everything else worth knowing, searchable.', '#/formulas'],

@@ -7,6 +7,7 @@
     exam: () => Pages.exam(),
     drill: () => Pages.drill(),
     r: () => Pages.rconsole(),
+    rpractice: (id) => Pages.rpractice(id),
     flashcards: () => Pages.flashcards(),
     formulas: () => Pages.formulas(),
   };

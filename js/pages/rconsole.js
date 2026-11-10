@@ -16,6 +16,7 @@ window.Pages = window.Pages || {};
     }
     return webRPromise;
   }
+  window.RRun = { getWebR };
 
   const SNIPS = [
     ['Binomial', 'dbinom(x = 6, size = 20, prob = 0.25)\npbinom(q = 6, size = 20, prob = 0.25)\n1 - pbinom(q = 5, size = 20, prob = 0.25)\nqbinom(p = 0.8, size = 15, prob = 0.2)'],
