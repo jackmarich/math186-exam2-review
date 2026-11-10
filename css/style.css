@@ -211,3 +211,4 @@ pre.rcode, pre.rout { margin: 0; padding: 12px 14px; background: var(--code-bg);
 
 textarea.rcode-in { width: 100%; min-height: 110px; margin: 6px 0 10px; }
 .problem .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.keybox code, .trap code, .lesson code { overflow-wrap: anywhere; }
